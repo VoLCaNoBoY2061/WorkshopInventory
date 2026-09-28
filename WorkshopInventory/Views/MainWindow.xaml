@@ -6,7 +6,13 @@
         WindowStartupLocation="CenterScreen">
     <DockPanel>
         <Border DockPanel.Dock="Top" Background="#2F3E4E" Padding="12">
-            <TextBlock x:Name="HeaderText" Foreground="White" FontSize="14"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <TextBlock x:Name="HeaderText" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
+
+                <Button Content="Выход" Width="100" Height="30" 
+            Background="#FFE0E0" Foreground="Black" BorderBrush="#FFAAAA"
+            Click="LogoutButton_Click" ToolTip="Вернуться к экрану входа"/>
+            </StackPanel>
         </Border>
         <TabControl x:Name="MainTabs" Margin="4">
             <TabItem Header="Материалы">

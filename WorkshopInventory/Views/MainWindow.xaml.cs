@@ -50,11 +50,27 @@ namespace WorkshopInventory.Views
             RequestsTab.Refresh();
             if (ReportsTabItem.Visibility == Visibility.Visible) ReportsTab.Refresh();
         }
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Освобождаем ресурсы базы данных текущего пользователя
+            _db.Dispose();
 
+            // 2. Создаем и показываем окно входа заново
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            // 3. Закрываем текущее главное окно
+            this.Close();
+        }
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             _db.Dispose();
+        }
+
+        private void MaterialsTab_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
