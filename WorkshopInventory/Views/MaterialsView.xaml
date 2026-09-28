@@ -50,8 +50,8 @@
                 <TextBox x:Name="NameBox" Grid.Row="1" Grid.Column="0" Margin="0,0,4,0" ToolTip="Введите полное название материала"/>
                 <TextBox x:Name="UnitBox" Grid.Row="1" Grid.Column="1" Text="шт" Margin="0,0,4,0"/>
                 <TextBox x:Name="CategoryBox" Grid.Row="1" Grid.Column="2" Margin="0,0,4,0"/>
-                <TextBox x:Name="MinQtyBox" Grid.Row="1" Grid.Column="3" Text="0" Margin="0,0,4,0"/>
-                <TextBox x:Name="QtyBox" Grid.Row="1" Grid.Column="4" Text="0" Margin="0,0,4,0"/>
+                <TextBox x:Name="MinQtyBox" Grid.Row="1" Grid.Column="3" Text="0" Margin="0,0,4,0" PreviewTextInput="NumberValidationTextBox"/>
+                <TextBox x:Name="QtyBox" Grid.Row="1" Grid.Column="4" Text="0" Margin="0,0,4,0" PreviewTextInput="NumberValidationTextBox"/>
                 <TextBox x:Name="LocationBox" Grid.Row="1" Grid.Column="5" Text="Основной склад" Margin="0,0,8,0"/>
 
                 <Button Grid.Row="1" Grid.Column="6" Content="Добавить" Width="110" Height="26" FontWeight="Bold" Background="#D4EDDA" Click="OnAddMaterial"/>

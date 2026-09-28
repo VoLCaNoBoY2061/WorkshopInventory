@@ -1,5 +1,7 @@
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WorkshopInventory.Data;
 using WorkshopInventory.Models;
 using WorkshopInventory.Services;
@@ -146,6 +148,12 @@ namespace WorkshopInventory.Views
                 Refresh();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            // Разрешаем только цифры, точку и запятую
+            Regex regex = new Regex("[^0-9.,]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

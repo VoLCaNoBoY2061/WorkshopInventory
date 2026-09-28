@@ -34,7 +34,7 @@
 
                 <!-- Поля ввода -->
                 <ComboBox x:Name="ReceiptMaterial" Grid.Row="1" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,5,0"/>
-                <TextBox x:Name="ReceiptQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" ToolTip="Введите число"/>
+                <TextBox x:Name="ReceiptQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" ToolTip="Введите число" PreviewTextInput="NumberValidationTextBox"/>
                 <TextBox x:Name="ReceiptSupplier" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="ReceiptLocation" Grid.Row="1" Grid.Column="3" IsEditable="True" Margin="0,0,10,0"/>
                 <Button Grid.Row="1" Grid.Column="4" Content="Оприходовать" Width="110" Height="26" FontWeight="Bold" Background="#D4EDDA" Click="OnReceipt"/>
@@ -63,7 +63,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="3" Text="Склад (откуда списываем)" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
 
                 <ComboBox x:Name="WriteOffMaterial" Grid.Row="1" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,5,0"/>
-                <TextBox x:Name="WriteOffQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                <TextBox x:Name="WriteOffQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" PreviewTextInput="NumberValidationTextBox"/>
                 <TextBox x:Name="WriteOffReason" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="WriteOffLocation" Grid.Row="1" Grid.Column="3" IsEditable="True" Margin="0,0,10,0"/>
                 <Button Grid.Row="1" Grid.Column="4" Content="Списать" Width="110" Height="26" FontWeight="Bold" Background="#F8D7DA" Click="OnWriteOff"/>
@@ -92,7 +92,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="3" Text="Куда (можно ввести новый)" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
 
                 <ComboBox x:Name="MovementMaterial" Grid.Row="1" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,5,0"/>
-                <TextBox x:Name="MovementQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                <TextBox x:Name="MovementQty" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" PreviewTextInput="NumberValidationTextBox"/>
                 <ComboBox x:Name="MovementFrom" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="MovementTo" Grid.Row="1" Grid.Column="3" IsEditable="True" Margin="0,0,10,0"/>
                 <Button Grid.Row="1" Grid.Column="4" Content="Переместить" Width="110" Height="26" FontWeight="Bold" Background="#FFF3CD" Click="OnMovement"/>
