@@ -1,0 +1,39 @@
+<UserControl x:Class="WorkshopInventory.Views.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <TabControl Margin="8">
+        <TabItem Header="Отчёт об остатках">
+            <DataGrid x:Name="StockGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Материал" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="120"/>
+                    <DataGridTextColumn Header="Остаток (все склады)" Binding="{Binding Quantity}" Width="150"/>
+                    <DataGridTextColumn Header="Ед." Binding="{Binding Unit}" Width="60"/>
+                    <DataGridTextColumn Header="Мин. остаток" Binding="{Binding MinQuantity}" Width="100"/>
+                    <DataGridCheckBoxColumn Header="Дефицит" Binding="{Binding IsBelowMinimum, Mode=OneWay}" IsReadOnly="True" Width="70"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+        <TabItem Header="Остатки по складам">
+            <DataGrid x:Name="StockByLocationGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Материал" Binding="{Binding MaterialName}" Width="*"/>
+                    <DataGridTextColumn Header="Склад" Binding="{Binding Location}" Width="200"/>
+                    <DataGridTextColumn Header="Остаток" Binding="{Binding Quantity}" Width="100"/>
+                    <DataGridTextColumn Header="Ед." Binding="{Binding Unit}" Width="60"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+        <TabItem Header="Движение материалов">
+            <DataGrid x:Name="MovementGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="140"/>
+                    <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="100"/>
+                    <DataGridTextColumn Header="Материал" Binding="{Binding MaterialName}" Width="*"/>
+                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
+                    <DataGridTextColumn Header="Детали" Binding="{Binding Details}" Width="220"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+    </TabControl>
+</UserControl>

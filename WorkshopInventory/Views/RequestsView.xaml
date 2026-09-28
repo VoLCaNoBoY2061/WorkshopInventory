@@ -1,0 +1,33 @@
+<UserControl x:Class="WorkshopInventory.Views.RequestsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="10">
+        <StackPanel x:Name="CreatePanel" DockPanel.Dock="Top" Orientation="Horizontal" Visibility="Collapsed">
+            <ComboBox x:Name="MaterialCombo" Width="180" DisplayMemberPath="Name"/>
+            <TextBox x:Name="QtyBox" Width="70" ToolTip="Количество"/>
+            <ComboBox x:Name="TypeCombo" Width="110"/>
+            <TextBox x:Name="CommentBox" Width="180" ToolTip="Комментарий"/>
+            <Button Content="Создать заявку" Click="OnCreateRequest"/>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="ApproveButton" Content="Одобрить" Click="OnApprove" Visibility="Collapsed"/>
+            <Button x:Name="RejectButton" Content="Отклонить" Click="OnReject" Visibility="Collapsed"/>
+            <Button x:Name="FulfillButton" Content="Выдать / принять возврат" Click="OnFulfill" Visibility="Collapsed"/>
+            <Button Content="Обновить" Click="OnRefresh"/>
+        </StackPanel>
+
+        <DataGrid x:Name="Grid" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="40"/>
+                <DataGridTextColumn Header="Мастер" Binding="{Binding MasterName}" Width="120"/>
+                <DataGridTextColumn Header="Материал" Binding="{Binding MaterialName}" Width="*"/>
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="70"/>
+                <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="90"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="90"/>
+                <DataGridTextColumn Header="Создана" Binding="{Binding DateCreated}" Width="130"/>
+                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="160"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

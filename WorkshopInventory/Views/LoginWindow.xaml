@@ -1,0 +1,18 @@
+<Window x:Class="WorkshopInventory.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вход в систему" Height="280" Width="380"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <StackPanel Margin="20" VerticalAlignment="Center">
+        <TextBlock Text="Учёт компонентов и материалов в мастерской"
+                   FontSize="16" FontWeight="Bold" Margin="0,0,0,16" TextWrapping="Wrap"/>
+        <Label Content="Логин"/>
+        <TextBox x:Name="LoginBox" Text="storekeeper"/>
+        <Label Content="Пароль"/>
+        <PasswordBox x:Name="PasswordBox" Password="1234" Margin="4"/>
+        <TextBlock x:Name="ErrorText" Foreground="Red" Margin="4" TextWrapping="Wrap"/>
+        <Button Content="Войти" Click="OnLoginClick" Width="100" HorizontalAlignment="Right"/>
+        <TextBlock Margin="4,12,4,0" FontSize="11" Foreground="Gray" TextWrapping="Wrap"
+                   Text="Демо-пользователи: storekeeper / manager / master, пароль 1234"/>
+    </StackPanel>
+</Window>

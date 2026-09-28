@@ -1,0 +1,33 @@
+<UserControl x:Class="WorkshopInventory.Views.MaterialsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="8">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Label Content="Склад:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="LocationCombo" Width="180" SelectionChanged="OnLocationChanged"/>
+            <Button Content="Обновить" Click="OnRefreshClick"/>
+        </StackPanel>
+
+        <StackPanel x:Name="AddPanel" DockPanel.Dock="Top" Orientation="Horizontal" Visibility="Collapsed">
+            <TextBox x:Name="NameBox" Width="140" ToolTip="Название материала"/>
+            <TextBox x:Name="UnitBox" Width="50" Text="шт" ToolTip="Единица измерения"/>
+            <TextBox x:Name="CategoryBox" Width="100" ToolTip="Категория"/>
+            <TextBox x:Name="MinQtyBox" Width="70" Text="0" ToolTip="Мин. остаток (по всем складам)"/>
+            <TextBox x:Name="QtyBox" Width="70" Text="0" ToolTip="Начальный остаток"/>
+            <TextBox x:Name="LocationBox" Width="140" Text="Основной склад" ToolTip="Склад для начального остатка"/>
+            <Button Content="Добавить материал" Click="OnAddMaterial"/>
+        </StackPanel>
+
+        <DataGrid x:Name="Grid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Материал" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="120"/>
+                <DataGridTextColumn Header="Ед." Binding="{Binding Unit}" Width="60"/>
+                <DataGridTextColumn Header="Остаток" Binding="{Binding Quantity}" Width="90"/>
+                <DataGridTextColumn Header="Мин. остаток" Binding="{Binding MinQuantity}" Width="100"/>
+                <DataGridTextColumn Header="Склад" Binding="{Binding Location}" Width="150"/>
+                <DataGridCheckBoxColumn Header="Дефицит" Binding="{Binding IsBelowMinimum, Mode=OneWay}" IsReadOnly="True" Width="70"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
