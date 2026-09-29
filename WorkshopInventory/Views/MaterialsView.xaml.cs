@@ -138,7 +138,7 @@ namespace WorkshopInventory.Views
                 // 5. Регистрация начального остатка (если он > 0)
                 if (qty > 0)
                 {
-                    _stock.RegisterReceipt(material.Id, qty, "Начальный остаток", _user.Id, location);
+                    _stock.RegisterReceipt(material.Id, qty, "Начальный остаток", _user, location);
                 }
 
                 // 6. Успешное завершение и очистка полей

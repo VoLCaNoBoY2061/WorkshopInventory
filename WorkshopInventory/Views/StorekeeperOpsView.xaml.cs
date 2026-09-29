@@ -103,7 +103,7 @@ namespace WorkshopInventory.Views
 
             try
             {
-                _stock.RegisterReceipt(material.Id, qty, ReceiptSupplier.Text.Trim(), _user.Id, location);
+                _stock.RegisterReceipt(material.Id, qty, ReceiptSupplier.Text.Trim(), _user, location);
                 ReceiptQty.Clear();
                 ReceiptSupplier.Clear();
                 Refresh();
@@ -119,7 +119,7 @@ namespace WorkshopInventory.Views
 
             try
             {
-                _stock.RegisterWriteOff(material.Id, qty, WriteOffReason.Text.Trim(), _user.Id, location);
+                _stock.RegisterWriteOff(material.Id, qty, WriteOffReason.Text.Trim(), _user, location);
                 WriteOffQty.Clear();
                 WriteOffReason.Clear();
                 Refresh();
@@ -142,7 +142,7 @@ namespace WorkshopInventory.Views
 
             try
             {
-                _stock.RegisterMovement(material.Id, qty, from, to!, _user.Id);
+                _stock.RegisterMovement(material.Id, qty, from, to!, _user);
                 MovementQty.Clear();
                 MovementTo.Text = string.Empty;
                 Refresh();

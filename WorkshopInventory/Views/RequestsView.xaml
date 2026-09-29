@@ -9,30 +9,23 @@
             <Grid Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
-                    <!-- Материал -->
                     <ColumnDefinition Width="80" />
-                    <!-- Кол-во -->
                     <ColumnDefinition Width="140"/>
-                    <!-- Тип -->
                     <ColumnDefinition Width="*"/>
-                    <!-- Комментарий (занимает всё свободное место) -->
                     <ColumnDefinition Width="Auto"/>
-                    <!-- Кнопка -->
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Подписи -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Материал" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Кол-во" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Тип заявки" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
                 <TextBlock Grid.Row="0" Grid.Column="3" Text="Комментарий (необязательно)" FontSize="12" Foreground="DimGray" Margin="0,0,0,4"/>
 
-                <!-- Поля ввода -->
                 <ComboBox x:Name="MaterialCombo" Grid.Row="1" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,5,0"/>
-                <TextBox x:Name="QtyBox" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                <TextBox x:Name="QtyBox" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" PreviewTextInput="NumberValidationTextBox"/>
                 <ComboBox x:Name="TypeCombo" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
                 <TextBox x:Name="CommentBox" Grid.Row="1" Grid.Column="3" Margin="0,0,10,0"/>
                 <Button Grid.Row="1" Grid.Column="4" Content="Создать заявку" Width="130" Height="26" FontWeight="Bold" Background="#D4EDDA" Click="OnCreateRequest"/>
@@ -49,6 +42,20 @@
 
         <!-- ================= ТАБЛИЦА ЗАЯВОК ================= -->
         <DataGrid x:Name="Grid" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <!-- ДОБАВЛЕНА ПОДСВЕТКА ОТКЛОНЁННЫХ ЗАЯВОК -->
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRejected}" Value="True">
+                            <Setter Property="Background" Value="#FFE0E0"/>
+                            <Setter Property="Foreground" Value="#C00000"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="ToolTip" Value="Заявка отклонена. См. комментарий."/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="40"/>
                 <DataGridTextColumn Header="Мастер" Binding="{Binding MasterName}" Width="120"/>

@@ -14,12 +14,15 @@ namespace WorkshopInventory.Services
             _stock = stock;
         }
 
-        // Мастер: "Создание заявки на получение детали"
-        public MaterialRequest CreateRequest(int masterId, int materialId, decimal quantity, RequestType type, string comment)
+        public MaterialRequest CreateRequest(User master, int materialId, decimal quantity, RequestType type, string comment)
         {
+            // ПРОВЕРКА РОЛИ
+            if (master.Role != UserRole.Мастер)
+                throw new InvalidOperationException("Только мастер может создавать заявки");
+
             var request = new MaterialRequest
             {
-                MasterId = masterId,
+                MasterId = master.Id,
                 MaterialId = materialId,
                 Quantity = quantity,
                 Type = type,
@@ -31,17 +34,24 @@ namespace WorkshopInventory.Services
             return request;
         }
 
-        // Руководитель: "Просмотр заявки и отправка кладовщику"
-        public void Approve(int requestId)
+        public void Approve(int requestId, User manager)
         {
+            // ПРОВЕРКА РОЛИ
+            if (manager.Role != UserRole.Руководитель)
+                throw new InvalidOperationException("Только руководитель может одобрять заявки");
+
             var request = _db.Requests.Find(requestId) ?? throw new InvalidOperationException("Заявка не найдена");
             request.Status = RequestStatus.Одобрена;
             request.DateProcessed = DateTime.Now;
             _db.SaveChanges();
         }
 
-        public void Reject(int requestId, string reason)
+        public void Reject(int requestId, string reason, User manager)
         {
+            // ПРОВЕРКА РОЛИ
+            if (manager.Role != UserRole.Руководитель)
+                throw new InvalidOperationException("Только руководитель может отклонять заявки");
+
             var request = _db.Requests.Find(requestId) ?? throw new InvalidOperationException("Заявка не найдена");
             request.Status = RequestStatus.Отклонена;
             request.Comment = reason;
@@ -49,22 +59,20 @@ namespace WorkshopInventory.Services
             _db.SaveChanges();
         }
 
-        // Кладовщик: "Просмотр остатков" -> ромб "В наличии?" -> выдача/отказ (см. activity-диаграмму)
-        // Возвращает true, если материал выдан/принят, false — если отклонено из-за нехватки.
-        public bool Fulfill(int requestId, int storekeeperId)
+        public bool Fulfill(int requestId, User storekeeper)
         {
+            // ПРОВЕРКА РОЛИ
+            if (storekeeper.Role != UserRole.Кладовщик)
+                throw new InvalidOperationException("Только кладовщик может выдавать материалы по заявкам");
+
             var request = _db.Requests.Find(requestId) ?? throw new InvalidOperationException("Заявка не найдена");
             var material = _db.Materials.Find(request.MaterialId) ?? throw new InvalidOperationException("Материал не найден");
 
             if (request.Type == RequestType.Получение)
             {
-                // Заявки мастеров закрываются с основного склада — если материал лежит
-                // только на другом складе, кладовщик сначала должен переместить его на
-                // основной (вкладка "Складские операции" → "Перемещение").
                 var available = _stock.GetQuantityAt(material.Id, StockService.DefaultLocation);
                 if (available < request.Quantity)
                 {
-                    // Ветка "Нет" на диаграмме — уведомление мастеру и завершение без выдачи
                     request.Status = RequestStatus.Отклонена;
                     request.Comment = "Недостаточно материала на складе";
                     request.DateProcessed = DateTime.Now;
@@ -72,13 +80,11 @@ namespace WorkshopInventory.Services
                     return false;
                 }
 
-                // Ветка "Да" — формирование отчёта о наличии/получении и списание со склада
-                _stock.RegisterWriteOff(material.Id, request.Quantity, $"Выдача по заявке №{request.Id}", storekeeperId);
+                _stock.RegisterWriteOff(material.Id, request.Quantity, $"Выдача по заявке №{request.Id}", storekeeper);
             }
             else
             {
-                // Возврат материалов мастером на склад
-                _stock.RegisterReceipt(material.Id, request.Quantity, $"Возврат по заявке №{request.Id}", storekeeperId);
+                _stock.RegisterReceipt(material.Id, request.Quantity, $"Возврат по заявке №{request.Id}", storekeeper);
             }
 
             request.Status = RequestStatus.Выполнена;
